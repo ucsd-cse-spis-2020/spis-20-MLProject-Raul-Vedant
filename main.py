@@ -1,7 +1,12 @@
 print(__doc__)
+# Raul and Vedant
+# SPIS 2020
+# ML Project
+# Predictions for player databases
 
-# Author: Nelle Varoquaux <nelle.varoquaux@gmail.com>
-#         Alexandre Gramfort <alexandre.gramfort@inria.fr>
+
+# Concept by: Nelle Varoquaux <nelle.varoquaux@gmail.com>
+#         	  Alexandre Gramfort <alexandre.gramfort@inria.fr>
 # License: BSD
 
 # Imports the following modules in order to establish a graph
@@ -105,7 +110,7 @@ def graph():
 		plt.legend()
 		plt.show()
 
-# Calls the f
+# Calls the function 'graph'
 graph()
 
 

@@ -114,7 +114,7 @@ def graph():
 graph()
 
 
-# STUFF TO DO:
+# POTENITAL ADD-ONS/STUFF TO DO:
 # Add more key events
 # 
 # Extend predictive reliability for greater than 1 year

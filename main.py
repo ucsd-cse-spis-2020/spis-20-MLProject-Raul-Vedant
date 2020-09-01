@@ -1,8 +1,9 @@
-print(__doc__)
+#print(__doc__)
 # Raul and Vedant
 # SPIS 2020
 # ML Project
 # Predictions for player databases
+# Title: Game Genie
 
 
 # Concept by: Nelle Varoquaux <nelle.varoquaux@gmail.com>
@@ -18,12 +19,25 @@ import random
 
 
 
-def dataPoints():
+def pickGame():
+	'''
+	Selects the game based on user input to display its data
+	'''
+	listGames = ['CSGO', 'Destiny2', 'RainbowSixSiege', 'TF2']
+	print(listGames)
+	game = input("Enter the name of a game: ")
+	if game in listGames:
+		return game
+	else:
+		print("Game is not in the list")
+		return pickGame()
+
+def dataPoints(game):
 	'''
 	Opens, reads, and prints day and player data from the csv file
 	'''
-	pd.read_csv("chart.csv")
-	dataFile = "chart.csv"
+	pd.read_csv(game + '.txt')
+	dataFile = game + '.txt'
 
 	# Opens the csv file
 	# Accounts for any errors in the file
@@ -46,7 +60,7 @@ def dataPoints():
 #dataPoints()
 
 
-def graph():
+def graph(game):
 	'''
 	Creates a graph based on recorded data and predictive data 
 	'''
@@ -57,18 +71,18 @@ def graph():
 	# Begins after the csv file has been processed
 	# Each value is a day after recorded data
 	i = 1
-	n = 300
+	n = int(input('How many days would you like me to predict? '))
 	
 	# Creates a list of potential events which would affect the behavior of the predictive model, each in their different ways
 	events = ['normal', 'server failure', 'game changing update']
 	
 	# Creates a list multiNum containing the number of days that correspond to each event in events list occurring
-	multiNum = [362, 1, 2]
+	multiNum = [int(n * 0.98), int(n * 0.005), int(n* 0.015)]
 	c = sum([[s] * n for s, n in zip(events, multiNum)], [])
 	
 	# Opens the csv file to read it
 	# Distinguishes between date/time and player count
-	with open('chart.txt','r') as csvfile:
+	with open('data/' + game + '.txt','r') as csvfile:
 		
 		# Reads csv file and splits up data between axis, with a comma acting as the boundary 
 		plots = csv.reader(csvfile, delimiter=',')
@@ -84,13 +98,13 @@ def graph():
 			
 			# Certain behavoir triggers based on the event the computer randomly chose
 			randEvent = random.choice(c)
-			
+			print(randEvent)
 			if randEvent == 'normal':
 				x.append(str(i) + ' days after data')
-				y.append(y[-1] * random.uniform(0.97, 1.02))
+				y.append(y[-1] * random.uniform(0.97, 1.03))
 			if randEvent == 'game changing update':
 				x.append(str(i) + ' days after data')
-				y.append(y[-1] * random.uniform(0.99, 1.05))
+				y.append(y[-1] * random.uniform(0.97, 1.03))
 			if randEvent == 'server failure':
 				x.append(str(i) + " days after data")
 				y.append(y[-1] * 0.15)
@@ -98,27 +112,26 @@ def graph():
 				# 'Recovery' state allows the program to plot reasonable points again
 				x.append('recovery')
 				y.append(y[-2])
+			
 			# Increases to indicate the next day after recorded data
 			i += 1
 		
 		# Plots the data (both from the csv file along with the predictive model); Labels each axis, title, and legend, and sets a boundary line defining where the original csv data ends and the prediction begins
-		plt.plot(y, label='new') #x parameter was taken out
-		plt.axvline(x = 3031, ymin = 0, ymax = 1, label = 'start of prediction', color = 'red')
+		plt.plot(y, label='') #x parameter was taken out
+		plt.axvline(x = len(x) - n, ymin = 0, ymax = 1, label = 'start of prediction', color = 'red')
 		plt.xlabel('Days After Launch')
-		plt.ylabel('Concurrent Players (Hundred Thousands)')
-		plt.title('Number of Concurrent Players per Day\n Counter Strike Global Offensive')
+		plt.ylabel('Concurrent Players')
+		plt.title('Number of Concurrent Players per Day in\n' + game)
 		plt.legend()
 		plt.show()
 
 # Calls the function 'graph'
-graph()
+graph(pickGame())
+
 
 
 # POTENITAL ADD-ONS/STUFF TO DO:
 # Add more key events
-# 
-# Extend predictive reliability for greater than 1 year
-# Import a picture for the picture of game for the corresponding data
 # Account for different trends based on video game/genre; different genres would have different long-term numbers
 
 

@@ -1,4 +1,3 @@
-#print(__doc__)
 # Raul and Vedant
 # SPIS 2020
 # ML Project

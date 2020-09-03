@@ -23,7 +23,7 @@ def pickGame():
 	'''
 	Selects the game based on user input to display its data
 	'''
-	listGames = ['CSGO', 'Destiny2', 'RainbowSixSiege', 'TF2']
+	listGames = ["Civ_VI", "CSGO", "Destiny2", "DOTA_2", "FM_2020","Garry's_Mod", "GTA_V", "PUBG", "RainbowSixSiege", "Rocket_League", "TF2", "Warframe"]
 	print(listGames)
 	game = input("Enter the name of a game: ")
 	if game in listGames:
@@ -127,11 +127,5 @@ def graph(game):
 
 # Calls the function 'graph'
 graph(pickGame())
-
-
-
-# POTENITAL ADD-ONS/STUFF TO DO:
-# Add more key events
-# Account for different trends based on video game/genre; different genres would have different long-term numbers
 
 
